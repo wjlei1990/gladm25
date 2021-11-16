@@ -27,7 +27,7 @@
  EXAMPLE
    ./bin/bkmns2ll vsv 100 0.5 10
 
- COMMAND LINE ARGUMENTS
+ COMMAND-LINE ARGUMENTS
    PARAMETER              - model parameter to be expanded (vph, rho, eta, vsv, etc.)
    DEPTH                  - depth in which the depth slice will be created
    RESOLUTION             - spatial distance (in degrees) between both latitude and longitude
@@ -39,7 +39,7 @@
    line, and creates a vertical cross-section of the model up to the requested spherical harmonics
    degree. In case you don't provide NMAX, all the coefficients, the routine will expand all the
    coefficients. If you want the perturbations instead of the absolute values, just add a 'd' at
-   beginning of the parameter code (e.g dvs, drho, etc). The routine writes the output to a file
+   beginning of the parameter code (e.g., dvs, drho, etc). The routine writes the output to a file
    called PARAMETER_DEPTH_DS.dat.
 
 ----------------------------------------------------------------------------------------------- */
@@ -268,7 +268,7 @@ static void helpMenu (void)
                     "\n\n EXAMPLE"
                     "\n    ./bin/bkmns2ll vsv 100 0.5 10"
 
-                    "\n\n COMMAND LINE ARGUMENTS"
+                    "\n\n COMMAND-LINE ARGUMENTS"
                     "\n    PARAMETER              - model parameter to be expanded (vph, rho, eta, vsv, etc.)"
                     "\n    DEPTH                  - depth in which the depth slice will be created"
                     "\n    RESOLUTION             - spatial distance (in degrees) between both latitude and longitude"
@@ -280,7 +280,7 @@ static void helpMenu (void)
                     "\n    line, and creates a vertical cross-section of the model up to the requested spherical harmonics"
                     "\n    degree. In case you don't provide NMAX, all the coefficients, the routine will expand all the"
                     "\n    coefficients. If you want the perturbations instead of the absolute values, just add a 'd' at"
-                    "\n    beginning of the parameter code (e.g dvs, drho, etc). The routine writes the output to a file"
+                    "\n    beginning of the parameter code (e.g., dvs, drho, etc). The routine writes the output to a file"
                     "\n    called PARAMETER_DEPTH_DS.dat.\n\n";
 
   fprintf (stderr, "%s", help_menu);
@@ -342,12 +342,12 @@ int main (int argc, char *argv[])
 
   unsigned np_b, nt_b, nr_b;
 
-  fprintf (stderr, "\nReading block model from %s.bin file...\n", prm);
-
   if (checkBlockModelHeaderIO (readBlockModelHeader (prm,
                                                      &np_b, &nt_b, &nr_b))) return 1;
 
   double (*Bm)[nt_b][nr_b] = malloc (sizeof (double[np_b][nt_b][nr_b]));
+
+  fprintf (stderr, "\nReading block model from %s.bin file...\n", prm);
 
   if (checkBlockModelIO (readBlockModel (prm, np_b, nt_b, nr_b, Bm))) return 1;
 

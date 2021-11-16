@@ -7,7 +7,7 @@ Author: Caio Ciardelli
 
 If you use SphModel, please, cite the following paper:
 
-Ciardelli, C., Bozdağ, E., Peter, D. and van der Lee, S., 2020. SphGLLTools: A set of routines for visualization, processing, sharing, and spherical harmonics analysis of tomographic models defined on GLL meshes. Computer & Geosciences, submitted.
+Ciardelli, C., Bozdağ, E., Peter, D., and van der Lee, S., 2021. SphGLLTools: A toolbox for visualization of large seismic model files based on 3D spectral-element meshes. Computer & Geosciences, submitted.
 
 # GLAD-M25
 -----------------------
@@ -44,7 +44,7 @@ $ make
 ## Usage
 -----------------------
 
-All routines have a help menu that shows up wherever you run them with no or with a wrong number of command-line parameters. The
+All routines have a help menu that shows up whenever you run them with no or with a wrong number of command-line parameters. The
 same menu is also at the beginning of each source code. For more details, please, refer to the manual of `SphGLLTools`.
 
 ## Development

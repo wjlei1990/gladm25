@@ -39,7 +39,7 @@
 
 #-----------------------------------------------------------------------------------------------
 
-title="GLAD-M25"
+title="GLAD-M15"
 
 if [ $1 = "vp" ]; then
   label="V@-P@- (km s@+-1@+)"
@@ -161,6 +161,10 @@ vstring=$(echo "$string" | cut -f4 | awk -F '[</>]' '{print $2" "$3}')
 drange=$(echo $dstring | awk '{printf "%lf", $2 - $1}')
 rrange=$(echo $rstring | awk '{printf "%lf", $2 - $1}')
 
+if [ $drange > 180 ]; then
+  lon0=$(echo "$lon0 + 180" | bc -l)
+fi
+
 dd=$(echo "$drange / ($nd - 1)" | bc -l)
 dr=$(echo "$rrange / ($nr - 1)" | bc -l)
 
@@ -205,7 +209,7 @@ gmt xyz2grd $filename -G$grdname -R$dmin/$dmax/$rmin/$rmax -I$dd/$dr -: -h4
 gmt makecpt -Cextra/tomo.cpt -T$cbmin/$cbmax > tomo_rescaled.cpt
 
 gmt begin $output pdf
-  gmt set FONT_TITLE 20p,100
+  gmt set FONT_TITLE 20p,Helvetica
 
   gmt grdimage $grdname -JPa10c/$dmean -R$dmin/$dmax/$rmin/$Rmax -BWeS+t$title -Baf -Ctomo_rescaled.cpt
 
