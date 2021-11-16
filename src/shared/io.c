@@ -576,10 +576,13 @@ unsigned writeExpansionDD (char *argv[], char *prm, bool dvv,
                            unsigned nr, unsigned nd,
                            double R[nr],
                            double Delta[nd],
+                           double Theta[nd],
+                           double Phi[nd],
                            double M[nr][nd])
 {
   /* Writes vertical cross section */
   char name[MAX_STRING_LEN];
+  char header_line[MAX_STRING_LEN];
 
   if (dvv)
   {
@@ -598,82 +601,88 @@ unsigned writeExpansionDD (char *argv[], char *prm, bool dvv,
   fprintf (file, "#nrad ndel: %u %u\n", nr, nd);
   fprintf (file, "#lat1 lon1 lat2 lon2: %s %s %s %s\n", argv[4], argv[5], argv[6], argv[7]);
 
+  strcpy(header_line, "#latitude (degree)  longitude (degree)   radius (km)    delta (degree)");
+
   if (dvv)
   {
     if (strcmp (prm, "vp") == 0)
 
-      fprintf (file, "#radius (km)   delta (degrees)      dVpVp\n");
+      strcat(header_line, "     dVpVp\n");
 
     else if (strcmp (prm, "vpv") == 0)
 
-      fprintf (file, "#radius (km)   delta (degrees)     dVpvVpv\n");
+      strcat(header_line, "     dVpvVpv\n");
 
     else if (strcmp (prm, "vph") == 0)
 
-      fprintf (file, "#radius (km)   delta (degrees)     dVphVph\n");
+      strcat(header_line, "     dVphVph\n");
 
     else if (strcmp (prm, "vs") == 0)
 
-      fprintf (file, "#radius (km)   delta (degrees)      dVsVs\n");
+      strcat(header_line, "     dVsVs\n");
 
     else if (strcmp (prm, "vsv") == 0)
 
-      fprintf (file, "#radius (km)   delta (degrees)     dVsvVsv\n");
+      strcat(header_line, "     dVsvVsv\n");
 
     else if (strcmp (prm, "vsh") == 0)
 
-      fprintf (file, "#radius (km)   delta (degrees)     dVshVsh\n");
+      strcat(header_line, "     dVshVsh\n");
 
     else if (strcmp (prm, "eta") == 0)
 
-      fprintf (file, "#radius (km)   delta (degrees)     dEtaEta\n");
+      strcat(header_line, "     dEtaEta\n");
 
     else if (strcmp (prm, "rho") == 0)
 
-      fprintf (file, "#radius (km)   delta (degrees)     dRhoRho\n");
+      strcat(header_line, "     dRhoRho\n");
   }
 
   else
   {
     if (strcmp (prm, "vp") == 0)
 
-      fprintf (file, "#radius (km)   delta (degrees)    Vp (km/s)\n");
+      strcat(header_line, "     Vp (km/s)\n");
 
     else if (strcmp (prm, "vpv") == 0)
 
-      fprintf (file, "#radius (km)   delta (degrees)    Vpv (km/s)\n");
+      strcat(header_line, "     Vpv (km/s)\n");
 
     else if (strcmp (prm, "vph") == 0)
 
-      fprintf (file, "#radius (km)   delta (degrees)    Vph (km/s)\n");
+      strcat(header_line, "     Vph (km/s)\n");
 
     else if (strcmp (prm, "vs") == 0)
 
-      fprintf (file, "#radius (km)   delta (degrees)    Vs (km/s)\n");
+      strcat(header_line, "     Vs (km/s)\n");
 
     else if (strcmp (prm, "vsv") == 0)
 
-      fprintf (file, "#radius (km)   delta (degrees)    Vsv (km/s)\n");
+      strcat(header_line, "     Vsv (km/s)\n");
 
     else if (strcmp (prm, "vsh") == 0)
 
-      fprintf (file, "#radius (km)   delta (degrees)    Vsh (km/s)\n");
+      strcat(header_line, "     Vsh (km/s)\n");
 
     else if (strcmp (prm, "eta") == 0)
 
-      fprintf (file, "#radius (km)   delta (degrees)       Eta\n");
+      strcat(header_line, "     Eta\n");
 
     else if (strcmp (prm, "rho") == 0)
 
-      fprintf (file, "#radius (km)   delta (degrees)    Rho (g/cm^3)\n");
+      strcat(header_line, "     Rho (g/cm^3)\n");
   }
 
-  for (unsigned i = 0; i < nr; i++)
+  fprintf (file, "%s", header_line);
 
-    for (unsigned j = 0; j < nd; j++)
-
-      fprintf (file, "%10.3lf %14.3lf %19E\n", R[i] * EARTH_R,
-                                               Delta[j], M[i][j]);
+  for (unsigned i = 0; i < nr; i++) {
+    for (unsigned j = 0; j < nd; j++) {
+      double lat = 90 - rad2Degree(Theta[j]);
+      double lon = rad2Degree(Phi[j]);
+      fprintf (file, "%-20.3lf %-19.3lf %-14.3lf %-12.3lf %19E\n",
+          lat, lon, R[i] * EARTH_R, Delta[j], M[i][j]);
+    }
+  }
 
   return 0;
 }

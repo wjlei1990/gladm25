@@ -545,7 +545,7 @@ int main (int argc, char *argv[])
   fprintf (stderr, "\n\nWriting expansion...\n");
 
   if (checkExpansionIO (writeExpansionDD (argv, prm, dvv, nr,
-                                          nd, R, Delta, M))) return 1;
+                                          nd, R, Delta, Theta, Phi, M))) return 1;
 
   free (M);
 

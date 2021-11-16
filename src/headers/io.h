@@ -69,6 +69,8 @@ unsigned writeExpansionDD (char *argv[], char *prm, bool dvv,
                            unsigned nr, unsigned nd,
                            double R[nr],
                            double Delta[nd],
+                           double Theta[nd],
+                           double Phi[nd],
                            double M[nr][nd]);
 unsigned writeExpansionPf (char *argv[], bool dvv,
                            unsigned nr,
